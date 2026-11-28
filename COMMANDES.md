@@ -26,3 +26,17 @@
 | `git commit -m "test: break job-3"` | Commit qui casse volontairement job-3 (`lss`) |
 | `git commit -m "fix"` | Commit qui corrige job-3 (`ls`) |
 - docker pull : récupère l'image depuis Docker Hub
+## Git — Branches, Pull Request et synchronisation
+
+```bash
+# Créer et basculer sur une nouvelle branche
+git checkout -b feature/hello-message
+
+# Valider et pousser la branche vers le dépôt distant
+git add .
+git commit -m "feat: new hello message"
+git push -u origin feature/hello-message
+
+# Revenir sur main et récupérer les changements après le merge de la PR sur GitHub
+git checkout main
+git pull origin main

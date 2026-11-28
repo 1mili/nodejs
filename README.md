@@ -28,3 +28,17 @@ Pour valider le code *avant* la fusion dans `main` : le statut du pipeline s'aff
 - **Checkout dans chaque job** : chaque job tourne sur un runner neuf et isolé, donc le code n'est pas partagé entre jobs.
 - **Exécution #3** : `job-2` ne dépend que de `job-1` (réussi), donc il s'exécute ; `job-4` dépend de `job-3` (en échec), donc il est ignoré (skipped).
 # nodejs
+## Questions de synthèse
+
+1. **Différence entre un test unitaire et un test d'intégration** :
+   - Un **test unitaire** vérifie isolément une petite unité de code (comme une fonction) sans dépendre du reste du système. Exemple dans ce TP : tester `greet('  Ali ')` pour vérifier qu'il renvoie `'Hello Ali!'`.
+   - Un **test d'intégration** vérifie que plusieurs composants ou modules fonctionnent ensemble correctement (par exemple le routeur Express et la logique de salutation). Exemple dans ce TP : appeler la route `GET /` ou `GET /hello/Docker` via HTTP et vérifier le code `200` et le texte retourné.
+
+2. **Pourquoi stocker le jeton Docker Hub dans un secret GitHub plutôt que dans le fichier YAML** :
+   - Le fichier YAML est versionné dans le dépôt Git : y écrire un jeton en clair exposerait l'accès au compte Docker Hub à toute personne ayant accès au code ou à l'historique Git. Les GitHub Secrets sont chiffrés et masqués dans les logs d'exécution.
+
+3. **Pourquoi le job `build-and-push` dépend-il des deux jobs de tests** :
+   - Cela garantit qu'une image Docker n'est construite et publiée que si les tests unitaires et d'intégration passent avec succès, évitant ainsi de pousser une image contenant des erreurs ou des régressions.
+
+4. **Intérêt de tagger l'image avec le SHA du commit en plus de `latest`** :
+   - Le tag `latest` pointe toujours vers la dernière version publiée et peut changer à tout moment, tandis que le SHA du commit identifie de manière unique et immuable la version exacte du code source qui a produit l'image, ce qui facilite la traçabilité et le retour arrière (*rollback*) en cas de problème.
