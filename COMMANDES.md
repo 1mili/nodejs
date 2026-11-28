@@ -25,3 +25,4 @@
 | `git commit -m "ci: add job-2, job-3 and job-4"` | Commit du pipeline complet |
 | `git commit -m "test: break job-3"` | Commit qui casse volontairement job-3 (`lss`) |
 | `git commit -m "fix"` | Commit qui corrige job-3 (`ls`) |
+- docker pull : récupère l'image depuis Docker Hub
